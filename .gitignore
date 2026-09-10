@@ -1,0 +1,17 @@
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.env
+.env.local
+.vscode/
+.idea/
+*.swp
+*.swo
+dist/
+build/
+.cache/
+.codeartsdoer/

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上班族快手菜指南 — 周末备菜3小时，工作日晚餐15分钟</title>
+  <meta name="description" content="帮上班族建立"下班后15分钟吃饭系统"的书：14章+6个附录工具表，覆盖厨房诊断、周末备菜、食材模块化、调味模块化、快手烹饪、一锅出、营养搭配、冷冻复热、30天迭代全流程。">
+
+  <link rel="icon" type="image/png" href="assets/images/cover.png">
+  <meta property="og:type" content="book">
+  <meta property="og:title" content="上班族快手菜指南 — 周末备菜3小时，工作日晚餐15分钟">
+  <meta property="og:description" content="帮上班族建立"下班后15分钟吃饭系统"的书：14章+6个附录工具表，覆盖诊断、备菜、组合、营养、安全、迭代全流程。">
+  <meta property="og:image" content="https://chandler-song.github.io/what-to-eat-after-work/assets/images/cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#ebf0f5', 100:'#d6e0eb', 200:'#adc2d9', 300:'#84a3c7',
+                    400:'#5b84b5', 500:'#3b5b7f', 600:'#1e3a5f', 700:'#15293f',
+                    800:'#0f1f30', 900:'#0a1521' },
+            gold: { DEFAULT:'#b8860b', light:'#d4a843', dark:'#8b6508' },
+            ink:  { DEFAULT:'#111827', light:'#4b5563', muted:'#6b7280' }
+          },
+          fontFamily: {
+            serif: ['"Noto Serif SC"', '"Source Han Serif SC"', '"Songti SC"', 'serif'],
+            sans:  ['-apple-system', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/book.css?v=20260910-1">
+  <script defer src="assets/js/chapters.js?v=20260910-1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="assets/js/app.js?v=20260910-1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body class="bg-white dark:bg-slate-900 text-ink dark:text-slate-200 font-sans antialiased">
+
+<div x-data="bookApp()" x-init="init()">
+
+  <!-- ========== 首页 view='home' ========== -->
+  <div x-show="view==='home'" class="fade-enter">
+
+    <!-- 顶部导航条 -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+      <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-[9px] bg-navy-600 dark:bg-navy-500 shadow-sm ring-1 ring-gold/40 shrink-0" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              <path d="M18.2 3.6h2.6v5l-1.3-1.1-1.3 1.1z" fill="#d4a843" stroke="none"/>
+            </svg>
+          </span>
+          <span class="font-serif text-xl font-bold text-navy-600 dark:text-navy-200">上班族快手菜指南</span>
+        </div>
+        <div class="flex items-center gap-2">
+
+          <button @click="toggleTheme()" class="icon-btn" title="切换主题" aria-label="切换主题">
+            <svg x-show="theme==='light'" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg x-show="theme==='dark'" x-cloak aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+          <button @click="openChapter(lastChapter || '01')" class="btn-primary text-sm hidden md:inline-block">开始阅读</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 1. 英雄区 -->
+    <section class="reveal max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+      <div class="flex justify-center md:justify-end">
+        <img src="assets/images/cover.png" alt="《上班族快手菜指南》封面" class="w-full max-w-xs md:max-w-md rounded-lg shadow-md ring-1 ring-gold/20">
+      </div>
+      <div>
+        <p class="text-gold font-sans text-sm tracking-widest mb-4">QUICK MEALS · 上班族快手菜指南</p>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-navy-600 dark:text-navy-200 leading-tight mb-4">上班族快手菜指南</h1>
+        <p class="font-serif text-lg text-navy-400 dark:text-navy-300 mb-6">Quick Meals for Office Workers</p>
+
+        <p class="text-ink-light dark:text-slate-400 leading-relaxed mb-8">
+          这不是一本教你做菜的书，而是一本帮上班族建立"下班后 15 分钟吃饭系统"的书。全书 14 章 + 6 个附录工具表，覆盖厨房诊断、周末备菜、食材模块化、调味模块化、快手烹饪、一锅出、营养搭配、冷冻复热、30 天迭代全流程。
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <button @click="openChapter(lastChapter || '01')" class="btn-primary">开始阅读</button>
+          <button @click="goAuthor()" class="btn-secondary">作者介绍</button>
+        </div>
+        <p x-show="lastChapter" class="text-sm text-ink-muted dark:text-slate-500 mt-4">
+          上次读到第 <span x-text="lastChapter"></span> 章
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. 核心理念 -->
+    <section class="reveal max-w-3xl mx-auto px-6 py-12">
+      <div class="card rounded-2xl p-8 md:p-12 text-center">
+        <p class="text-gold font-sans text-sm tracking-widest mb-4">核心主张</p>
+        <p class="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-slate-200">
+          <span class="text-gold font-bold">不教你成为厨师，只帮你每天准时吃上饭。</span>你需要的不是更努力地做饭，而是减少每天做饭的工作量——把备菜挪到周末，工作日只剩组装，50 分钟就能压到 15 分钟。
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. 15分钟晚餐系统模型 -->
+    <section class="reveal reveal-group max-w-6xl mx-auto px-6 py-12">
+      <h2 class="font-serif text-2xl md:text-3xl font-bold text-navy-600 dark:text-navy-200 text-center mb-2">15 分钟晚餐系统</h2>
+      <p class="text-center text-ink-muted dark:text-slate-500 mb-10">周末备菜 × 食材模块 × 味型模块 × 快手手法 × 一锅优先 × 营养检查 = 15 分钟晚餐</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center font-bold text-sm">1</span>
+            <h3 class="font-serif text-lg font-bold text-navy-600 dark:text-navy-200">周末备菜</h3>
+          </div>
+          <p class="text-ink-light dark:text-slate-400 text-sm leading-relaxed">3 小时解决一周备料。洗、切、解冻、腌全部前置到周末，工作日只剩组装。</p>
+        </div>
+        <div class="card">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center font-bold text-sm">2</span>
+            <h3 class="font-serif text-lg font-bold text-navy-600 dark:text-navy-200">食材模块化</h3>
+          </div>
+          <p class="text-ink-light dark:text-slate-400 text-sm leading-relaxed">把肉、菜、主食切成"半成品模块"，打开冰箱直接下锅，不用现洗现切。</p>
+        </div>
+        <div class="card">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center font-bold text-sm">3</span>
+            <h3 class="font-serif text-lg font-bold text-navy-600 dark:text-navy-200">调味模块化</h3>
+          </div>
+          <p class="text-ink-light dark:text-slate-400 text-sm leading-relaxed">5 瓶万能酱解决 80% 的晚餐。不用每次现调味道，挤一挤就出锅。</p>
+        </div>
+        <div class="card">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center font-bold text-sm">4</span>
+            <h3 class="font-serif text-lg font-bold text-navy-600 dark:text-navy-200">快手手法</h3>
+          </div>
+          <p class="text-ink-light dark:text-slate-400 text-sm leading-relaxed">水煮 / 清蒸 / 快炒 / 一锅出四种手法，10-20 分钟出一荤一素一主食。</p>
+        </div>
+        <div class="card">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center font-bold text-sm">5</span>
+            <h3 class="font-serif text-lg font-bold text-navy-600 dark:text-navy-200">一锅优先</h3>
+          </div>
+          <p class="text-ink-light dark:text-slate-400 text-sm leading-relaxed">能一锅出绝不两锅。少洗碗是坚持做饭的关键，洗碗时间不超过吃饭时间。</p>
+        </div>
+        <div class="card">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center font-bold text-sm">6</span>
+            <h3 class="font-serif text-lg font-bold text-navy-600 dark:text-navy-200">营养检查</h3>
+          </div>
+          <p class="text-ink-light dark:text-slate-400 text-sm leading-relaxed">不算卡路里，用四格法检查一荤一素一主食是否均衡，简单可执行。</p>
+        </div>
+        <div class="md:col-span-2 lg:col-span-3 rounded-xl bg-navy-600 dark:bg-navy-700 flex items-center justify-center gap-3 px-8 py-6 text-center shadow-md">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <p class="font-serif text-base md:text-lg font-bold text-white dark:text-navy-100">3 小时不是门槛，是结果</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 金句墙 -->
+    <section class="reveal reveal-group max-w-6xl mx-auto px-6 py-12">
+      <h2 class="font-serif text-2xl md:text-3xl font-bold text-navy-600 dark:text-navy-200 text-center mb-10">金句精选</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card quote-card">
+          <p class="font-serif text-lg leading-relaxed text-ink dark:text-slate-200">"你需要的不是更努力地做饭，而是减少每天做饭的工作量。"</p>
+          <p class="text-xs text-ink-muted dark:text-slate-500 mt-3">— 第 01 章</p>
+        </div>
+        <div class="card quote-card">
+          <p class="font-serif text-lg leading-relaxed text-ink dark:text-slate-200">"不教你成为厨师，只帮你每天准时吃上饭。"</p>
+          <p class="text-xs text-ink-muted dark:text-slate-500 mt-3">— 前言</p>
+        </div>
+        <div class="card quote-card">
+          <p class="font-serif text-lg leading-relaxed text-ink dark:text-slate-200">"晚餐时间 = 周末备菜 + 工作日组装，而不是从零做一道菜。"</p>
+          <p class="text-xs text-ink-muted dark:text-slate-500 mt-3">— 第 01 章</p>
+        </div>
+        <div class="card quote-card">
+          <p class="font-serif text-lg leading-relaxed text-ink dark:text-slate-200">"真正厉害的人，不是会做 100 道菜，而是看到冰箱里的 5 种食材，就能组合出 10 顿饭。"</p>
+          <p class="text-xs text-ink-muted dark:text-slate-500 mt-3">— 第 14 章</p>
+        </div>
+        <div class="card quote-card">
+          <p class="font-serif text-lg leading-relaxed text-ink dark:text-slate-200">"你不是懒，是每天从零开始做饭的方式本身就不可能快。"</p>
+          <p class="text-xs text-ink-muted dark:text-slate-500 mt-3">— 第 01 章</p>
+        </div>
+        <div class="card quote-card">
+          <p class="font-serif text-lg leading-relaxed text-ink dark:text-slate-200">"3 小时不是门槛，是结果。等你跑通系统，3 小时换来一周轻松，是最划算的交易。"</p>
+          <p class="text-xs text-ink-muted dark:text-slate-500 mt-3">— 前言</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 目录导航 -->
+    <section class="reveal reveal-group max-w-6xl mx-auto px-6 py-12">
+      <h2 class="font-serif text-2xl md:text-3xl font-bold text-navy-600 dark:text-navy-200 text-center mb-2">全书目录</h2>
+      <p class="text-center text-ink-muted dark:text-slate-500 mb-10">6 篇 · 20 章 · 点击任一章开始阅读</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <template x-for="part in parts" :key="part.id">
+          <div class="card card-interactive">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <h3 class="font-serif font-bold text-navy-600 dark:text-navy-200">
+                第 <span x-text="part.id"></span> 部分　<span x-text="part.name"></span>
+              </h3>
+              <span class="text-xs text-ink-muted dark:text-slate-500" x-text="'第 ' + part.range + ' 章'"></span>
+            </div>
+            <ul class="space-y-1.5">
+              <template x-for="ch in chaptersByPart(part.id)" :key="ch.id">
+                <li>
+                  <button @click="openChapter(ch.id)" class="w-full text-left text-sm text-ink-light dark:text-slate-400 hover:text-navy-600 dark:hover:text-navy-200 hover:bg-slate-50 dark:hover:bg-slate-800 px-2 py-2 rounded transition">
+                    <span class="text-gold font-mono text-xs mr-2" x-text="ch.id"></span>
+                    <span x-text="ch.title"></span>
+                  </button>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- 6. 作者介绍 -->
+    <section id="author" class="reveal max-w-4xl mx-auto px-6 py-12">
+      <div class="card p-8 md:p-10">
+        <div class="flex md:flex-row flex-col gap-8 items-start">
+          <div class="flex-shrink-0">
+            <div class="author-avatar w-24 h-24 rounded-full ring-2 ring-gold/40 hover:ring-gold/70 shadow-inner overflow-hidden">
+              <img src="https://avatars.githubusercontent.com/u/23094571?v=4" alt="宋秀强头像" class="w-full h-full object-cover" loading="lazy" referrerpolicy="no-referrer" />
+            </div>
+          </div>
+          <div class="flex-1 reveal-group">
+            <h3 class="font-serif text-2xl font-bold text-navy-600 dark:text-navy-200 mb-2">宋秀强</h3>
+            <p class="text-ink-light dark:text-slate-400 mb-4">深耕人力资源和职业发展领域的实践者</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-3 py-1 rounded-full bg-navy-50 dark:bg-navy-800 text-navy-600 dark:text-navy-200 text-xs">10年猎头</span>
+              <span class="px-3 py-1 rounded-full bg-navy-50 dark:bg-navy-800 text-navy-600 dark:text-navy-200 text-xs">世界500强招聘经理</span>
+              <span class="px-3 py-1 rounded-full bg-navy-50 dark:bg-navy-800 text-navy-600 dark:text-navy-200 text-xs">GCDF职业规划师</span>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div class="text-center">
+                <p class="font-serif text-xl md:text-2xl font-bold text-gold">5000+</p>
+                <p class="text-xs text-ink-muted dark:text-slate-500">服务求职者</p>
+              </div>
+              <div class="text-center">
+                <p class="font-serif text-xl md:text-2xl font-bold text-gold">10+</p>
+                <p class="text-xs text-ink-muted dark:text-slate-500">年从业经验</p>
+              </div>
+              <div class="text-center">
+                <p class="font-serif text-xl md:text-2xl font-bold text-gold">6+</p>
+                <p class="text-xs text-ink-muted dark:text-slate-500">行业覆盖</p>
+              </div>
+            </div>
+            <p class="text-sm text-ink-light dark:text-slate-400 mb-4 leading-relaxed">
+              覆盖互联网、高科技、人工智能、芯片、智能硬件、金融等多个行业。长期跟踪就业市场趋势，深谙招聘方与求职者的博弈逻辑。
+            </p>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-4 mb-4">
+              <p class="text-xs text-ink-muted dark:text-slate-500 mb-3">另著：</p>
+              <div class="grid sm:grid-cols-2 gap-3">
+
+                <a href="https://chandler-song.github.io/should-i-go-back-to-china/" target="_blank" rel="noopener" class="book-card group">
+                  <span class="book-card-icon" aria-hidden="true">
+                    <svg focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-medium text-navy-600 dark:text-navy-200 group-hover:text-gold-dark">《要不要回国？》</span>
+                    <span class="block text-xs text-ink-muted dark:text-slate-500 mt-0.5">硅谷工程师回国决策手册</span>
+                  </span>
+                  <svg class="book-card-arrow" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+                <a href="https://chandler-song.github.io/what-you-need-to-know-about-job-hunting/" target="_blank" rel="noopener" class="book-card group">
+                  <span class="book-card-icon" aria-hidden="true">
+                    <svg focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-medium text-navy-600 dark:text-navy-200 group-hover:text-gold-dark">《关于求职，你要知道的那些事》</span>
+                    <span class="block text-xs text-ink-muted dark:text-slate-500 mt-0.5">从简历到面试的求职全流程避坑手册</span>
+                  </span>
+                  <svg class="book-card-arrow" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+                <a href="https://chandler-song.github.io/what-nobody-tells-you-about-work/" target="_blank" rel="noopener" class="book-card group">
+                  <span class="book-card-icon" aria-hidden="true">
+                    <svg focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-medium text-navy-600 dark:text-navy-200 group-hover:text-gold-dark">《职场上那些没人告诉你的》</span>
+                    <span class="block text-xs text-ink-muted dark:text-slate-500 mt-0.5">职场规则与生存智慧的清醒指南</span>
+                  </span>
+                  <svg class="book-card-arrow" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+                <a href="https://chandler-song.github.io/search-intelligence/" target="_blank" rel="noopener" class="book-card group">
+                  <span class="book-card-icon" aria-hidden="true">
+                    <svg focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-medium text-navy-600 dark:text-navy-200 group-hover:text-gold-dark">《搜商》</span>
+                    <span class="block text-xs text-ink-muted dark:text-slate-500 mt-0.5">面对未知时寻找答案的能力</span>
+                  </span>
+                  <svg class="book-card-arrow" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+                <a href="https://chandler-song.github.io/power-how-ordinary-people-leap-ahead/" target="_blank" rel="noopener" class="book-card group">
+                  <span class="book-card-icon" aria-hidden="true">
+                    <svg focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-medium text-navy-600 dark:text-navy-200 group-hover:text-gold-dark">《权力》</span>
+                    <span class="block text-xs text-ink-muted dark:text-slate-500 mt-0.5">普通人的人生跃迁法则</span>
+                  </span>
+                  <svg class="book-card-arrow" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+                <a href="https://chandler-song.github.io/speak-up-at-work/" target="_blank" rel="noopener" class="book-card group">
+                  <span class="book-card-icon" aria-hidden="true">
+                    <svg focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-medium text-navy-600 dark:text-navy-200 group-hover:text-gold-dark">《开口就能用的职场英语》</span>
+                    <span class="block text-xs text-ink-muted dark:text-slate-500 mt-0.5">从背稿到自然——Recruiter 的英语表达手册</span>
+                  </span>
+                  <svg class="book-card-arrow" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-4">
+              <p class="text-xs text-ink-muted dark:text-slate-500 mb-3">联系作者：</p>
+              <div class="flex flex-wrap gap-2">
+
+                <a href="https://chandler-song.github.io/firefly/" target="_blank" rel="noopener" class="contact-chip" title="个人主页">
+                  <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  <span>个人主页</span>
+                </a>
+                <a href="mailto:songqiang51886@163.com" class="contact-chip" title="发送邮件给作者">
+                  <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                  <span>邮箱</span>
+                </a>
+
+                <span class="contact-chip" x-data="{ revealed: false }" @click="revealed = true" :title="revealed ? '微信号：275737875' : '点击查看微信号'" style="cursor:pointer">
+                  <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.201 3.002 5.55a.59.59 0 0 1 .213.665L2.53 17.97a.29.29 0 0 0 .434.313l2.97-1.746a.8.8 0 0 1 .6-.083 8.6 8.6 0 0 0 2.16.276c.27 0 .54-.013.8-.038-.2-.6-.31-1.24-.31-1.9 0-3.6 3.45-6.53 7.7-6.53.28 0 .55.013.82.038C16.47 4.073 12.9 2.188 8.691 2.188zM5.78 6.58a1.02 1.02 0 1 1 0 2.04 1.02 1.02 0 0 1 0-2.04zm5.82 0a1.02 1.02 0 1 1 0 2.04 1.02 1.02 0 0 1 0-2.04zm4.13 2.526c-3.84 0-6.96 2.58-6.96 5.76 0 3.18 3.12 5.76 6.96 5.76.7 0 1.38-.09 2.02-.25a.65.65 0 0 1 .5.07l2.2 1.28a.24.24 0 0 0 .36-.26l-.55-1.83a.48.48 0 0 1 .18-.55c1.46-1.08 2.42-2.7 2.42-4.49 0-3.18-3.12-5.76-6.96-5.76zm-2.28 2.92a.84.84 0 1 1 0 1.68.84.84 0 0 1 0-1.68zm4.56 0a.84.84 0 1 1 0 1.68.84.84 0 0 1 0-1.68z"/></svg>
+                  <span x-text="revealed ? '微信：275737875' : '微信：点击查看'"></span>
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 页脚 -->
+    <footer class="border-t border-slate-200 dark:border-slate-700 mt-12">
+      <div class="max-w-4xl mx-auto px-6 py-10 text-center">
+        <p class="font-serif text-lg text-navy-600 dark:text-navy-200 mb-2">《上班族快手菜指南》</p>
+        <p class="text-sm text-ink-muted dark:text-slate-500 mb-4">宋秀强 著</p>
+        <button @click="openChapter(lastChapter || '01')" class="btn-primary text-sm mb-6">开始阅读</button>
+        <p class="font-serif text-sm text-ink-light dark:text-slate-400 italic mb-6">"不教你成为厨师，只帮你每天准时吃上饭。"</p>
+        <p class="text-xs text-ink-muted dark:text-slate-500 max-w-2xl mx-auto leading-relaxed">
+          本书内容为公开资料调研整理与实操经验总结，具体营养与医疗建议请遵医嘱。食品安全章节建议结合权威资料核查。
+        </p>
+        <p class="mt-4">
+          <a href="https://github.com/Chandler-Song/what-to-eat-after-work/issues" target="_blank" rel="noopener" class="text-gold text-xs hover:underline">反馈与勘误 · GitHub Issues</a>
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========== 阅读视图 view='read' ========== -->
+  <div x-show="view==='read'" x-cloak :class="immersive ? 'immersive' : ''">
+
+    <!-- 进度条 -->
+    <div class="reading-progress" :style="`width: ${progress}%`"></div>
+
+    <!-- 固定顶栏（沉浸模式下也常驻可见，不隐藏） -->
+    <header class="read-header fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+      <div class="px-4 py-3 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2 min-w-0">
+          <button @click="goHome()" class="icon-btn flex-shrink-0" title="返回首页" aria-label="返回首页">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <button @click="openToc()" class="icon-btn flex-shrink-0" :class="immersive ? '' : 'lg:hidden'" title="目录" aria-label="打开目录" :aria-expanded="sidebarOpen || sidebarShow" aria-controls="mobile-toc">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+          <span class="font-serif text-sm md:text-base font-bold text-navy-600 dark:text-navy-200 truncate" x-text="currentChapterMeta ? '第 ' + currentChapterMeta.id + ' 章 ' + currentChapterMeta.title : ''"></span>
+        </div>
+        <div class="flex items-center gap-1 flex-shrink-0 relative">
+          <div class="hidden md:flex items-center gap-1">
+            <button @click="setFont(-1)" class="icon-btn" title="缩小字号" aria-label="缩小字号" :disabled="fontSize<=10">
+              <span class="text-sm font-bold">A-</span>
+            </button>
+            <span class="text-xs text-ink-muted dark:text-slate-500 w-7 text-center select-none" x-text="fontSize"></span>
+            <button @click="setFont(1)" class="icon-btn" title="放大字号" aria-label="放大字号" :disabled="fontSize>=20">
+              <span class="text-base font-bold">A+</span>
+            </button>
+            <button @click="toggleImmersive()" class="icon-btn" title="沉浸阅读 (I)" aria-label="沉浸阅读" :aria-pressed="immersive">
+              <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+          </div>
+
+          <button @click="toggleTheme()" class="icon-btn" title="切换主题" aria-label="切换主题">
+            <svg x-show="theme==='light'" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg x-show="theme==='dark'" x-cloak aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+          <button @click="goAuthor()" class="icon-btn" title="作者介绍" aria-label="作者介绍">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+
+          <button @click="moreOpen=!moreOpen" class="icon-btn md:hidden" title="更多设置" aria-label="更多设置" :aria-expanded="moreOpen">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+          </button>
+          <div x-show="moreOpen" x-cloak @click.outside="moreOpen=false"
+               class="absolute right-0 top-full mt-2 w-52 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg p-1.5 md:hidden z-50">
+
+            <div class="flex items-center justify-between px-2 py-1.5">
+              <span class="text-sm text-ink-light dark:text-slate-400 pl-1">字号</span>
+              <div class="flex items-center gap-0.5">
+                <button @click="setFont(-1)" class="icon-btn" aria-label="缩小字号" :disabled="fontSize<=10"><span class="text-sm font-bold">A-</span></button>
+                <span class="text-xs text-ink-muted dark:text-slate-500 w-6 text-center select-none" x-text="fontSize"></span>
+                <button @click="setFont(1)" class="icon-btn" aria-label="放大字号" :disabled="fontSize>=20"><span class="text-base font-bold">A+</span></button>
+              </div>
+            </div>
+            <button @click="toggleImmersive()" class="menu-item">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              沉浸阅读
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 侧边目录 - 桌面常驻 -->
+    <aside class="read-sidebar fixed left-0 top-0 bottom-0 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 z-40 overflow-y-auto pt-16 pb-6 px-4 hidden lg:block" :class="(immersive && sidebarShow) ? 'sidebar-show' : ''">
+      <p class="font-serif font-bold text-navy-600 dark:text-navy-200 px-2 py-2 mb-2">全书目录</p>
+      <template x-for="part in parts" :key="part.id">
+        <div class="mb-3">
+          <p class="text-xs font-bold text-gold px-2 py-1">第 <span x-text="part.id"></span> 部分 · <span x-text="part.name"></span></p>
+          <template x-for="ch in chaptersByPart(part.id)" :key="ch.id">
+            <button @click="openChapter(ch.id)" class="sidebar-link" :class="currentChapter===ch.id ? 'active' : ''">
+              <span class="font-mono text-xs text-gold mr-1 flex-shrink-0" x-text="ch.id"></span>
+              <span class="chapter-title" x-text="ch.title"></span>
+            </button>
+          </template>
+        </div>
+      </template>
+    </aside>
+
+    <!-- 侧边目录 - 移动端抽屉 -->
+    <div x-show="sidebarOpen" x-cloak x-transition.opacity class="fixed inset-0 bg-black/60 z-50 lg:hidden" @click="sidebarOpen=false"></div>
+    <aside id="mobile-toc" class="fixed left-0 top-0 bottom-0 w-[85%] max-w-xs bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 z-50 overflow-y-auto px-4 py-6 lg:hidden transition-transform duration-300" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" role="dialog" aria-label="章节目录">
+      <div class="flex items-center justify-between mb-4 px-2">
+        <p class="font-serif font-bold text-navy-600 dark:text-navy-200">全书目录</p>
+        <button @click="sidebarOpen=false" class="icon-btn" aria-label="关闭目录">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <template x-for="part in parts" :key="'m'+part.id">
+        <div class="mb-3">
+          <p class="text-xs font-bold text-gold px-2 py-1">第 <span x-text="part.id"></span> 部分 · <span x-text="part.name"></span></p>
+          <template x-for="ch in chaptersByPart(part.id)" :key="'m'+ch.id">
+            <button @click="openChapter(ch.id); sidebarOpen=false" class="sidebar-link" :class="currentChapter===ch.id ? 'active' : ''">
+              <span class="font-mono text-xs text-gold mr-1 flex-shrink-0" x-text="ch.id"></span>
+              <span class="chapter-title" x-text="ch.title"></span>
+            </button>
+          </template>
+        </div>
+      </template>
+    </aside>
+
+    <!-- 阅读区 -->
+    <main class="read-main lg:ml-64 pt-16 min-h-screen">
+      <article class="read-article max-w-[720px] mx-auto px-6 py-10">
+        <!-- 加载中 -->
+        <div x-show="loading" class="text-center py-20">
+          <span class="brand-spinner"></span>
+          <p class="mt-4 text-ink-muted dark:text-slate-500">章节加载中…</p>
+        </div>
+
+        <!-- 加载错误 -->
+        <div x-show="error" class="text-center py-20" x-cloak>
+          <p class="font-serif text-xl text-red-600 mb-4">章节加载失败</p>
+          <p class="text-ink-muted dark:text-slate-500 mb-6" x-text="error"></p>
+          <button @click="goHome()" class="btn-primary">返回首页</button>
+        </div>
+
+        <!-- 章节内容 -->
+        <div x-show="!loading && !error" x-cloak>
+          <div class="markdown chapter-enter" x-html="currentHtml" :style="`font-size: ${fontSize}px; line-height: ${lineHeight}`"></div>
+
+          <!-- 翻页 -->
+          <nav class="chapter-nav flex justify-between items-center mt-12 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <button x-show="prevChapterMeta" @click="prevChapter()" class="flex items-center gap-2 text-navy-600 dark:text-navy-200 hover:text-gold transition">
+              <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              <span class="text-sm">
+                <span class="block text-xs text-ink-muted dark:text-slate-500">上一章</span>
+                <span x-text="prevChapterMeta ? '第 ' + prevChapterMeta.id + ' 章' : ''"></span>
+              </span>
+            </button>
+            <span x-show="!prevChapterMeta" class="text-sm text-ink-muted dark:text-slate-500">已是第一章</span>
+
+            <button x-show="nextChapterMeta" @click="nextChapter()" class="flex items-center gap-2 text-navy-600 dark:text-navy-200 hover:text-gold transition">
+              <span class="text-sm text-right">
+                <span class="block text-xs text-ink-muted dark:text-slate-500">下一章</span>
+                <span x-text="nextChapterMeta ? '第 ' + nextChapterMeta.id + ' 章' : ''"></span>
+              </span>
+              <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <span x-show="!nextChapterMeta" class="text-sm text-ink-muted dark:text-slate-500">已是最后一章</span>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+  </div>
+
+</div>
+
+<style>
+  [x-cloak] { display: none !important; }
+
+</style>
+</body>
+</html>
