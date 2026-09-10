@@ -1,6 +1,7 @@
-# 《上班族快手菜指南》
+# 《上班族下班吃什么》
 
-> 周末备菜 3 小时，工作日晚餐 15 分钟。不教你成为厨师，只帮你每天准时吃上饭。
+
+> 上班族快手菜指南，周末备菜 3 小时，工作日晚餐 15 分钟。不教你成为厨师，只帮你每天准时吃上饭。
 
 **[在线阅读](https://chandler-song.github.io/what-to-eat-after-work/)** · **[GitHub Issues 反馈](https://github.com/Chandler-Song/what-to-eat-after-work/issues)**
 
@@ -123,7 +124,7 @@
 python scripts/start_server.py
 ```
 
-浏览器自动打开 `http://localhost:8000/`。不能直接双击 `index.html`（`file://` 协议下 `fetch()` 加载章节会失败）。
+浏览器自动打开 `http://localhost:8001/`。不能直接双击 `index.html`（`file://` 协议下 `fetch()` 加载章节会失败）。
 
 ---
 
@@ -138,5 +139,3 @@ python scripts/start_server.py
 **宋秀强** · 深耕人力资源和职业发展领域的实践者
 
 - 个人主页：[chandler-song.github.io/firefly](https://chandler-song.github.io/firefly/)
-- 邮箱：songqiang51886@163.com
-- GitHub：[@Chandler-Song](https://github.com/Chandler-Song)
