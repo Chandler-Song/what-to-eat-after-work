@@ -120,17 +120,32 @@ body { font-family: var(--font-sans); }
 .dark .markdown code { background: #0f172a; color: #d4a843; }
 
 .markdown pre {
-  background: #0f172a;
-  color: #e2e8f0;
+  background: #f8f6f0;                  /* 暖米白纸感，同 blockquote */
+  color: #1e3a5f;                       /* navy-600 典雅深蓝字 */
   padding: 1em 1.5em;
   border-radius: 8px;
+  border-left: 4px solid #b8860b;       /* 品牌金竖线，呼应 h2/blockquote */
+  border-top: 1px solid #ece7d6;        /* 极浅暖灰卡边 */
+  border-right: 1px solid #ece7d6;
+  border-bottom: 1px solid #ece7d6;
   overflow-x: auto;
   margin: 1.5em 0;
+  box-shadow: 0 1px 2px rgba(184, 134, 11, .04);  /* 极浅金投影，卡片轻浮 */
 }
 .markdown pre code {
   background: transparent;
   color: inherit;
   padding: 0;
+  font-size: .92em;                     /* 略收缩，配方行不被等宽撑太宽 */
+}
+.dark .markdown pre {
+  background: #0f172a;                  /* 暗色主题保留深色底 */
+  color: #e2e8f0;
+  border-left-color: #d4a843;           /* 暗色用 gold-light 竖线 */
+  border-top-color: #1e293b;            /* 暗色边框同 slate 系 */
+  border-right-color: #1e293b;
+  border-bottom-color: #1e293b;
+  box-shadow: none;                     /* 暗色下取消暖投影 */
 }
 
 .markdown ul, .markdown ol {
